@@ -1,0 +1,15 @@
+[
+  {
+    "modid": "backportedflora",
+    "name": "Backported Flora",
+    "description": "Adds flowers and seaweed from newer versions to 1.12.2",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Azmalent"],
+    "credits": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

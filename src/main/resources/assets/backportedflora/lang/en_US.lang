@@ -1,0 +1,11 @@
+itemGroup.backportedflora=Backported Flora
+
+# Items
+item.kelp_soup.name=Kelp Soup
+
+# Plants
+tile.seagrass.name=Algae
+tile.kelp.name=Kelp
+tile.lily_of_the_valley.name=Lily of the Valley
+tile.cornflower.name=Cornflower
+tile.wither_rose.name=Wither Rose
