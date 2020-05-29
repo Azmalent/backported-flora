@@ -36,7 +36,6 @@ abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WA
         translationKey = name
         soundType = SoundType.PLANT
         creativeTab = BackportedFlora.creativeTab
-        blockHardness = 0.2f
     }
 
     fun createItemBlock(): Item {
