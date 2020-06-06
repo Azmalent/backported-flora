@@ -78,7 +78,7 @@ class BlockKelp : AbstractSeaweed(NAME), IPlantable {
 
         //Must have kelp or valid soil below
         val down = worldIn.getBlockState(pos.down())
-        return down.block == this || down.block in ALLOWED_SOILS
+        return down.block == this || down.material in ALLOWED_SOILS
     }
 
     override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {

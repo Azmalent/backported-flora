@@ -15,8 +15,6 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import net.minecraft.world.biome.Biome
-import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.EnumPlantType
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.fml.relauncher.Side
@@ -24,8 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly
 
 abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WATER), IPlantable {
     companion object {
-        val ALLOWED_SOILS = setOf<Block>(
-                Blocks.SAND, Blocks.GRASS, Blocks.DIRT, Blocks.GRAVEL, Blocks.CLAY
+        val ALLOWED_SOILS = setOf<Material>(
+                Material.GROUND, Material.SAND, Material.GRASS, Material.CLAY, Material.ROCK
         )
     }
 
@@ -74,7 +72,10 @@ abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WA
     private fun checkAndDropBlock(world: IBlockAccess, pos: BlockPos, state: IBlockState) {
         if (!canBlockStay(world as World, pos, state)) {
             dropBlockAsItem(world, pos, state, 0)
-            world.setBlockState(pos, Blocks.WATER.defaultState, 3)
+
+            if (world.getBlockState(pos.up()).block == Blocks.WATER) {
+                world.setBlockState(pos, Blocks.WATER.defaultState, 3)
+            }
         }
     }
 

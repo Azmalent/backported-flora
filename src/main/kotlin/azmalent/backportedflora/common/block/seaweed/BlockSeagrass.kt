@@ -10,8 +10,8 @@ import net.minecraft.util.IStringSerializable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import net.minecraft.world.biome.Biome
-import net.minecraftforge.common.BiomeDictionary
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 
 class BlockSeagrass : AbstractSeaweed(NAME) {
     enum class SeagrassVariant : IStringSerializable {
@@ -62,9 +62,15 @@ class BlockSeagrass : AbstractSeaweed(NAME) {
         })
     }
 
+    @SideOnly(Side.CLIENT)
+    override fun getOffsetType(): EnumOffsetType {
+        return EnumOffsetType.XZ
+    }
+
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
+
         if (up.material != Material.WATER) return false
 
         //Must have a SINGLE seagrass or valid soil below
@@ -73,6 +79,6 @@ class BlockSeagrass : AbstractSeaweed(NAME) {
             return worldIn.getBlockState(pos.down(2)).block != this
         }
 
-        return down.block in ALLOWED_SOILS
+        return down.material in ALLOWED_SOILS
     }
 }
