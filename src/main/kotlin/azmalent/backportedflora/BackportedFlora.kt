@@ -3,10 +3,12 @@ package azmalent.backportedflora
 import azmalent.backportedflora.client.ModCreativeTab
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.registry.ModItems
+import azmalent.backportedflora.common.registry.ModSoundEvents
 import azmalent.backportedflora.common.registry.ModWorldgen
 import azmalent.backportedflora.proxy.IProxy
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraft.util.SoundEvent
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.Mod
@@ -24,8 +26,8 @@ import java.io.File
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Backported Flora"
-    const val VERSION = "1.2"
-    const val CONFIG_FILE_NAME = MODID + ".cfg"
+    const val VERSION = "1.2.1"
+    const val CONFIG_FILE_NAME = "$MODID.cfg"
 
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
     const val SERVER_PROXY = "azmalent.backportedflora.proxy.ServerProxy"
@@ -72,8 +74,14 @@ object BackportedFlora {
 
     @SubscribeEvent
     @JvmStatic fun registerItems(event: RegistryEvent.Register<Item>) {
-        logger.info("Registering itemBlocks")
+        logger.info("Registering items")
         ModBlocks.registerItemBlocks(event.registry)
         ModItems.register(event.registry)
+    }
+
+    @SubscribeEvent
+    @JvmStatic fun registerSoundEvents(event: RegistryEvent.Register<SoundEvent>) {
+        logger.info("Registering sounds")
+        ModSoundEvents.register(event.registry)
     }
 }

@@ -1,6 +1,7 @@
 package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
+import azmalent.backportedflora.client.ModSoundTypes
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.MapColor
@@ -32,7 +33,7 @@ abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WA
     init {
         setRegistryName(name)
         translationKey = name
-        soundType = SoundType.PLANT
+        soundType = ModSoundTypes.SEAWEED
         creativeTab = BackportedFlora.creativeTab
     }
 
@@ -72,10 +73,7 @@ abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WA
     private fun checkAndDropBlock(world: IBlockAccess, pos: BlockPos, state: IBlockState) {
         if (!canBlockStay(world as World, pos, state)) {
             dropBlockAsItem(world, pos, state, 0)
-
-            if (world.getBlockState(pos.up()).block == Blocks.WATER) {
-                world.setBlockState(pos, Blocks.WATER.defaultState, 3)
-            }
+            world.setBlockState(pos, Blocks.WATER.defaultState, 3)
         }
     }
 

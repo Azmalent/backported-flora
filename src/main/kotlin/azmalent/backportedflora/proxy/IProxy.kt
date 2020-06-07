@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 interface IProxy {
-    class WrongSideExceiption(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
+    class WrongSideException(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
 
     fun preInit(event: FMLPreInitializationEvent)
     fun init(event: FMLInitializationEvent)

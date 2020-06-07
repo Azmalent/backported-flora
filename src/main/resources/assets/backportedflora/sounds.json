@@ -1,0 +1,62 @@
+{
+  "block.seaweed.break": {
+    "category": "blocks",
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      "backportedflora:wet_grass_break1",
+      "backportedflora:wet_grass_break2",
+      "backportedflora:wet_grass_break3",
+      "backportedflora:wet_grass_break4"
+    ]
+  },
+
+  "block.seaweed.footsteps": {
+    "category": "blocks",
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "backportedflora:wet_grass_hit1",
+      "backportedflora:wet_grass_hit2",
+      "backportedflora:wet_grass_hit3",
+      "backportedflora:wet_grass_hit4",
+      "backportedflora:wet_grass_hit5",
+      "backportedflora:wet_grass_hit6"
+    ]
+  },
+
+  "block.seaweed.place": {
+    "category": "blocks",
+    "subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      "backportedflora:wet_grass_break1",
+      "backportedflora:wet_grass_break2",
+      "backportedflora:wet_grass_break3",
+      "backportedflora:wet_grass_break4"
+    ]
+  },
+
+  "block.seaweed.hit": {
+    "category": "blocks",
+    "subtitle": "subtitles.block.generic.hit",
+    "sounds": [
+      "backportedflora:wet_grass_hit1",
+      "backportedflora:wet_grass_hit2",
+      "backportedflora:wet_grass_hit3",
+      "backportedflora:wet_grass_hit4",
+      "backportedflora:wet_grass_hit5",
+      "backportedflora:wet_grass_hit6"
+    ]
+  },
+
+  "block.seaweed.fall": {
+    "category": "blocks",
+    "subtitle": "subtitles.block.generic.fall",
+    "sounds": [
+      "backportedflora:wet_grass_hit1",
+      "backportedflora:wet_grass_hit2",
+      "backportedflora:wet_grass_hit3",
+      "backportedflora:wet_grass_hit4",
+      "backportedflora:wet_grass_hit5",
+      "backportedflora:wet_grass_hit6"
+    ]
+  }
+}
