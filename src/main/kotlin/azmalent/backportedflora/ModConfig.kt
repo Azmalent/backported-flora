@@ -8,6 +8,7 @@ object ModConfig {
         var seagrassEnabled = true
         var kelpEnabled = true
         var kelpGrowthEnabled = true
+        var driedKelpEnabled = true
         var kelpSoupEnabled = true
 
         fun init(cfg: Configuration) {
@@ -19,8 +20,13 @@ object ModConfig {
                     "Whether kelp is registered")
             kelpGrowthEnabled = cfg.getBoolean("Kelp grows", NAME, kelpGrowthEnabled,
                     "Should kelp grow on its own?")
+            driedKelpEnabled = cfg.getBoolean("Dried kelp", NAME, driedKelpEnabled,
+                    "Whether dried kelp is enabled.\n" +
+                            "Dried kelp is a food item that can be eaten quickly.\n" +
+                            "You can also craft it into blocks that can be used as fuel.")
             kelpSoupEnabled = cfg.getBoolean("Kelp soup", NAME, kelpSoupEnabled,
                     "Whether kelp can be cooked into delicious soup")
+
         }
     }
 

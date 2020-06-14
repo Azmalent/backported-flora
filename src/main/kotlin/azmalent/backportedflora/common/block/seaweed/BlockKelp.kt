@@ -2,7 +2,9 @@ package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
+import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
+import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyInteger
@@ -17,11 +19,10 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
-import net.minecraftforge.common.IPlantable
 import java.util.*
 import kotlin.math.min
 
-class BlockKelp : AbstractSeaweed(NAME), IPlantable {
+class BlockKelp : AbstractSeaweed(NAME) {
     companion object {
         const val NAME = "kelp"
         const val REGISTRY_NAME = "${BackportedFlora.MODID}:$NAME"
@@ -97,5 +98,31 @@ class BlockKelp : AbstractSeaweed(NAME), IPlantable {
 
     fun isBiomeValid(biome: Biome): Boolean {
         return BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN)
+    }
+
+    fun getTopPosition(worldIn: World, pos: BlockPos): BlockPos {
+        var topPos = pos
+        while(worldIn.getBlockState(topPos.up()).block == this) {
+            topPos = topPos.up()
+        }
+
+        return topPos
+    }
+
+
+    // IGrowable implementation
+    override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState, isClient: Boolean): Boolean {
+        val topPos = getTopPosition(worldIn, pos)
+        val topAge = worldIn.getBlockState(topPos).getValue(AGE)
+
+        return topAge < MAX_AGE && canBlockStay(worldIn, topPos.up(), state)
+    }
+
+    override fun grow(worldIn: World, rand: Random, pos: BlockPos, state: IBlockState) {
+        val topPos = getTopPosition(worldIn, pos)
+        val topAge = worldIn.getBlockState(topPos).getValue(AGE)
+
+        val newBlockState = defaultState.withProperty(AGE, topAge + 1)
+        worldIn.setBlockState(topPos.up(), newBlockState)
     }
 }

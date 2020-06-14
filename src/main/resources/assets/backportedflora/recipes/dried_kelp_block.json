@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
+  "key": {
+    "x": {
+      "item": "backportedflora:dried_kelp"
+    }
+  },
+  "result": {
+    "item": "backportedflora:dried_kelp_block"
+  }
+}

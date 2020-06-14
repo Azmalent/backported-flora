@@ -2,6 +2,7 @@ package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
 import net.minecraft.block.BlockLiquid
+import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
@@ -12,8 +13,9 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import java.util.*
 
-class BlockSeagrass : AbstractSeaweed(NAME) {
+class BlockSeagrass : AbstractSeaweed(NAME), IGrowable {
     enum class SeagrassVariant : IStringSerializable {
         SINGLE, BOTTOM, TOP;
 
@@ -80,5 +82,17 @@ class BlockSeagrass : AbstractSeaweed(NAME) {
         }
 
         return down.material in ALLOWED_SOILS
+    }
+
+
+    // IGrowable implementation
+    override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState, isClient: Boolean): Boolean {
+        val actualState = state.getActualState(worldIn, pos)
+        return actualState.getValue(VARIANT) == SeagrassVariant.SINGLE
+                && canBlockStay(worldIn, pos.up(), state)
+    }
+
+    override fun grow(worldIn: World, rand: Random, pos: BlockPos, state: IBlockState) {
+        worldIn.setBlockState(pos.up(), state)
     }
 }

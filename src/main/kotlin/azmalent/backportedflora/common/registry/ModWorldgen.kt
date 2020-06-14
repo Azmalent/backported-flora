@@ -17,7 +17,7 @@ object ModWorldgen {
         GameRegistry.registerWorldGenerator(WorldGenNetherFlowers(flower), 0)
     }
 
-    fun registerGenerators() {
+    fun register() {
         if (ModConfig.Seaweed.seagrassEnabled) GameRegistry.registerWorldGenerator(WorldGenSeagrass(), 0)
         if (ModConfig.Seaweed.kelpEnabled) GameRegistry.registerWorldGenerator(WorldGenKelp(), 0)
 

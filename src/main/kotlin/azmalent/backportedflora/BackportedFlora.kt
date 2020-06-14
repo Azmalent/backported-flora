@@ -1,6 +1,8 @@
 package azmalent.backportedflora
 
 import azmalent.backportedflora.client.ModCreativeTab
+import azmalent.backportedflora.common.handler.ModFuelHandler
+import azmalent.backportedflora.common.recipe.ModRecipes
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.registry.ModItems
 import azmalent.backportedflora.common.registry.ModSoundEvents
@@ -17,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.registry.GameRegistry
 import org.apache.logging.log4j.Logger
 import java.io.File
 
@@ -26,7 +29,7 @@ import java.io.File
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Backported Flora"
-    const val VERSION = "1.2.1"
+    const val VERSION = "1.3"
     const val CONFIG_FILE_NAME = "$MODID.cfg"
 
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
@@ -57,7 +60,9 @@ object BackportedFlora {
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        ModWorldgen.registerGenerators()
+        GameRegistry.registerFuelHandler(ModFuelHandler())
+        ModWorldgen.register()
+        ModRecipes.register()
         proxy.init(event)
     }
 

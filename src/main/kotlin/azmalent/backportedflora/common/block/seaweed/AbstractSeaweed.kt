@@ -3,6 +3,7 @@ package azmalent.backportedflora.common.block.seaweed
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.client.ModSoundTypes
 import net.minecraft.block.Block
+import net.minecraft.block.IGrowable
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
@@ -20,8 +21,9 @@ import net.minecraftforge.common.EnumPlantType
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import java.util.*
 
-abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WATER), IPlantable {
+abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WATER), IPlantable, IGrowable {
     companion object {
         val ALLOWED_SOILS = setOf<Material>(
                 Material.GROUND, Material.SAND, Material.GRASS, Material.CLAY, Material.ROCK
@@ -99,6 +101,8 @@ abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WA
         worldIn.setBlockState(pos, Blocks.WATER.defaultState, 3)
     }
 
+
+
     //IPlantable implementation
     override fun getPlantType(world: IBlockAccess, pos: BlockPos): EnumPlantType {
         return EnumPlantType.Water
@@ -106,5 +110,12 @@ abstract class AbstractSeaweed(name: String) : Block(Material.WATER, MapColor.WA
 
     override fun getPlant(world: IBlockAccess, pos: BlockPos): IBlockState {
         return world.getBlockState(pos)
+    }
+
+
+
+    // IGrowable implementation
+    override fun canUseBonemeal(worldIn: World, rand: Random, pos: BlockPos, state: IBlockState): Boolean {
+        return canGrow(worldIn, pos, state, false)
     }
 }

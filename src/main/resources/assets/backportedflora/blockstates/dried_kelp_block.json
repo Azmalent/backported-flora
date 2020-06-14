@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "backportedflora:dried_kelp_block",
+    "textures": {
+      "particle": "backportedflora:blocks/dried_kelp_side",
+      "down": "backportedflora:blocks/dried_kelp_bottom",
+      "up": "backportedflora:blocks/dried_kelp_top",
+      "north": "backportedflora:blocks/dried_kelp_side",
+      "east": "backportedflora:blocks/dried_kelp_side",
+      "south": "backportedflora:blocks/dried_kelp_side",
+      "west": "backportedflora:blocks/dried_kelp_side"
+    }
+  },
+  "variants": {
+    "normal": [{ }],
+    "inventory": [{ }]
+  }
+}
