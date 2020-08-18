@@ -5,7 +5,7 @@ import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fml.common.IFuelHandler
 
-class ModFuelHandler : IFuelHandler{
+class ModFuelHandler : IFuelHandler {
     override fun getBurnTime(fuel: ItemStack?): Int {
         val item = fuel?.item ?: return 0
 

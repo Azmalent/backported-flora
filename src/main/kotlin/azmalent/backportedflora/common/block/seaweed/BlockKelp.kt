@@ -2,6 +2,7 @@ package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
+import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
 import net.minecraft.block.IGrowable
@@ -19,6 +20,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
+import net.minecraftforge.common.EnumPlantType
 import java.util.*
 import kotlin.math.min
 
@@ -100,7 +102,7 @@ class BlockKelp : AbstractSeaweed(NAME) {
         return BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN)
     }
 
-    fun getTopPosition(worldIn: World, pos: BlockPos): BlockPos {
+    private fun getTopPosition(worldIn: World, pos: BlockPos): BlockPos {
         var topPos = pos
         while(worldIn.getBlockState(topPos.up()).block == this) {
             topPos = topPos.up()
@@ -108,7 +110,6 @@ class BlockKelp : AbstractSeaweed(NAME) {
 
         return topPos
     }
-
 
     // IGrowable implementation
     override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState, isClient: Boolean): Boolean {

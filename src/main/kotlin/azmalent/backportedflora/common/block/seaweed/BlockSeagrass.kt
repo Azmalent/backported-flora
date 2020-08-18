@@ -1,6 +1,7 @@
 package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
+import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.block.BlockLiquid
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material

@@ -10,7 +10,7 @@ import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import java.util.*
 
-class WorldGenOverworldFlowers(private val flower: AbstractFlower) :  WorldGenCustomFlowers(flower) {
+class WorldGenOverworldFlowers(flower: AbstractFlower) :  WorldGenCustomFlowers(flower) {
     override fun getGenerationPos(world: World, rand: Random, chunkPos: ChunkPos): BlockPos {
         val x = rand.nextInt(16) + 8
         val z = rand.nextInt(16) + 8
