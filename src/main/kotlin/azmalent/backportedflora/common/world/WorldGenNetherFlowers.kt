@@ -21,8 +21,16 @@ class WorldGenNetherFlowers(private val flower: AbstractFlower) : WorldGenCustom
     override fun getGenerationPos(world: World, rand: Random, chunkPos: ChunkPos): BlockPos {
         val x = rand.nextInt(16) + 8
         val z = rand.nextInt(16) + 8
-        val y = rand.nextInt(128)
+        val y = rand.nextInt(64) + 32
 
         return chunkPos.getBlock(0, 0, 0).add(x, y, z)
+    }
+
+    override val generationChance = 0.5
+    override val patchGenerationAttempts = 8
+    override val flowerGenerationAttempts = 64
+
+    override fun canGenerateInWorld(world: World): Boolean {
+        return world.provider.dimension == -1
     }
 }

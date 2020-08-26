@@ -30,7 +30,7 @@ import java.io.File
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Backported Flora"
-    const val VERSION = "1.4"
+    const val VERSION = "1.5"
     const val CONFIG_FILE_NAME = "$MODID.cfg"
 
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"

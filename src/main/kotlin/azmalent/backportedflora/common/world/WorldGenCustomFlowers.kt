@@ -27,13 +27,19 @@ abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorl
 
     abstract fun getGenerationPos(world: World, rand: Random, chunkPos: ChunkPos): BlockPos
 
+    abstract val generationChance: Double
+    abstract val patchGenerationAttempts: Int
+    abstract val flowerGenerationAttempts: Int
+
+    abstract fun canGenerateInWorld(world: World): Boolean
+
     override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
         val biome = WorldGenUtil.getBiomeInChunk(world, chunkX, chunkZ)
-        if (flower.isBiomeValid(biome) && world.worldType != WorldType.FLAT) {
+        if (flower.isBiomeValid(biome) && canGenerateInWorld(world)) {
             val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
-            if (rand.nextDouble() < GENERATION_CHANCE) {
-                for (i in 0..4) {
+            if (rand.nextDouble() < generationChance) {
+                for (i in 0..patchGenerationAttempts) {
                     val pos = getGenerationPos(world, rand, chunkPos)
                     generateFlowers(world, rand, pos);
                 }
@@ -43,7 +49,7 @@ abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorl
     }
 
     private fun generateFlowers(world: World, rand: Random, pos: BlockPos) {
-        for (i in 0 until GENERATION_ATTEMPTS) {
+        for (i in 0 until flowerGenerationAttempts) {
             val blockPos = pos.add(
                 rand.nextInt(8) - rand.nextInt(8),
                 rand.nextInt(4) - rand.nextInt(4),

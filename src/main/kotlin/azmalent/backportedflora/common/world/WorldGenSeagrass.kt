@@ -57,7 +57,7 @@ class WorldGenSeagrass : IWorldGenerator {
 
             //50% to generate it 2 block high (if possible)
             if (rand.nextDouble() < 0.5) {
-                if (ModBlocks.KELP.canBlockStay(world, pos.up(), state)) {
+                if (ModBlocks.SEAGRASS.canBlockStay(world, pos.up(), state)) {
                     world.setBlockState(pos.up(), state, 2)
                 }
             }

@@ -20,4 +20,12 @@ class WorldGenOverworldFlowers(flower: AbstractFlower) :  WorldGenCustomFlowers(
 
         return chunkPos.getBlock(0, 0, 0).add(x, y, z)
     }
+
+    override val generationChance = 0.125
+    override val patchGenerationAttempts = 4
+    override val flowerGenerationAttempts = 64
+
+    override fun canGenerateInWorld(world: World): Boolean {
+        return world.worldType != WorldType.FLAT
+    }
 }
