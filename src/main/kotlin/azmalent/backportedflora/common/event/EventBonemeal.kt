@@ -4,10 +4,8 @@ import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
 import azmalent.backportedflora.common.block.seaweed.AbstractSeaweed
 import azmalent.backportedflora.common.registry.ModBlocks
-import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.init.Blocks
-import net.minecraft.item.ItemDye
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.event.entity.player.BonemealEvent
@@ -25,45 +23,58 @@ object EventBonemeal {
     )
 
     @SubscribeEvent
-    @JvmStatic fun onBonemealUsed(event: BonemealEvent) {
+    @JvmStatic fun onBonemealUsedOnDirt(event: BonemealEvent) {
         val world = event.world
         if (world.isRemote) return
 
-        val pos = event.pos
         val block = event.block
+        val up = event.pos.up()
 
-        val up = pos.up()
-        if (world.isAirBlock(up)) {
-            when (block.block) {
-                in FLOWER_ALLOWED_SOILS -> {
-                    if (ModConfig.Flowers.cornflowerEnabled) {
-                        growFlowers(up, world, ModBlocks.CORNFLOWER)
-                    }
-                    if (ModConfig.Flowers.lilyOfTheValleyEnabled) {
-                        growFlowers(up, world, ModBlocks.LILY_OF_THE_VALLEY)
-                    }
-                    event.result = Event.Result.DEFAULT
-                }
-                Blocks.SOUL_SAND -> {
-                    if (ModConfig.Flowers.witherRoseEnabled) {
-                        growFlowers(up, world, ModBlocks.WITHER_ROSE)
-                    }
-                    if (event.entityPlayer == Minecraft.getMinecraft().player && event.hand != null) {
-                        Minecraft.getMinecraft().player.swingArm(event.hand)
-                    }
-                    event.result = Event.Result.ALLOW
-                }
-
+        if (world.isAirBlock(up) && block.block in FLOWER_ALLOWED_SOILS) {
+            if (ModConfig.Flowers.cornflowerEnabled) {
+                growFlowers(up, world, ModBlocks.CORNFLOWER)
             }
-        } else if (world.getBlockState(up).material == Material.WATER) {
-            if (block.material in AbstractSeaweed.ALLOWED_SOILS) {
-                if (ModConfig.Seaweed.seagrassEnabled) {
-                    growSeagrass(up, world)
-                }
-                if (event.entityPlayer == Minecraft.getMinecraft().player && event.hand != null) {
-                    Minecraft.getMinecraft().player.swingArm(event.hand)
-                }
+            if (ModConfig.Flowers.lilyOfTheValleyEnabled) {
+                growFlowers(up, world, ModBlocks.LILY_OF_THE_VALLEY)
+            }
+            event.result = Event.Result.DEFAULT
+        }
+    }
+
+    @SubscribeEvent
+    @JvmStatic fun onBonemealUsedOnSoulsand(event: BonemealEvent) {
+        if (!ModConfig.Flowers.witherRoseEnabled) return;
+
+        val world = event.world
+        val block = event.block
+        val up = event.pos.up()
+
+        if (world.isAirBlock(up) && block.block == Blocks.SOUL_SAND) {
+            if (!world.isRemote) {
+                growFlowers(up, world, ModBlocks.WITHER_ROSE)
                 event.result = Event.Result.ALLOW
+            }
+            else if (event.entityPlayer == Minecraft.getMinecraft().player) {
+                Minecraft.getMinecraft().player.swingArm(event.hand!!)
+            }
+        }
+    }
+
+    @SubscribeEvent
+    @JvmStatic fun onBonemealUsedUnderwater(event: BonemealEvent) {
+        if (!ModConfig.Seaweed.seagrassEnabled) return
+
+        val world = event.world
+        val block = event.block
+        val up = event.pos.up()
+
+        if (world.getBlockState(up).block == Blocks.WATER && block.material in AbstractSeaweed.ALLOWED_SOILS) {
+            if (!world.isRemote) {
+                growSeagrass(up, world)
+                event.result = Event.Result.ALLOW
+            }
+            else if (event.entityPlayer == Minecraft.getMinecraft().player) {
+                Minecraft.getMinecraft().player.swingArm(event.hand!!)
             }
         }
     }
