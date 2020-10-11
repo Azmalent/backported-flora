@@ -48,7 +48,9 @@ object EventBonemeal {
                     if (ModConfig.Flowers.witherRoseEnabled) {
                         growFlowers(up, world, ModBlocks.WITHER_ROSE)
                     }
-                    Minecraft.getMinecraft().player.swingArm(event.hand)
+                    if (event.entityPlayer == Minecraft.getMinecraft().player && event.hand != null) {
+                        Minecraft.getMinecraft().player.swingArm(event.hand)
+                    }
                     event.result = Event.Result.ALLOW
                 }
 
@@ -58,7 +60,9 @@ object EventBonemeal {
                 if (ModConfig.Seaweed.seagrassEnabled) {
                     growSeagrass(up, world)
                 }
-                Minecraft.getMinecraft().player.swingArm(event.hand)
+                if (event.entityPlayer == Minecraft.getMinecraft().player && event.hand != null) {
+                    Minecraft.getMinecraft().player.swingArm(event.hand)
+                }
                 event.result = Event.Result.ALLOW
             }
         }
