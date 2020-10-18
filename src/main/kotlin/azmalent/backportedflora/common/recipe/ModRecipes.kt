@@ -12,7 +12,7 @@ object ModRecipes {
     }
 
     private fun registerSmelting() {
-        if (ModConfig.Seaweed.kelpEnabled && ModConfig.Seaweed.driedKelpEnabled) {
+        if (ModConfig.Kelp.enabled && ModConfig.Kelp.driedKelpEnabled) {
             GameRegistry.addSmelting(
                 ModBlocks.KELP.itemBlock,
                 ItemStack(ModItems.DRIED_KELP),

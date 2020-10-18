@@ -14,7 +14,7 @@ import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
 
-class BlockWitherRose : AbstractFlower(NAME) {
+class BlockWitherRose : AbstractFlower(NAME, ModConfig.WitherRose) {
     companion object {
         const val NAME = "wither_rose"
         const val REGISTRY_NAME = "${BackportedFlora.MODID}:$NAME"
@@ -29,7 +29,7 @@ class BlockWitherRose : AbstractFlower(NAME) {
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (ModConfig.Flowers.witherRoseCausesWither && entityIn is EntityLivingBase) {
+        if (ModConfig.WitherRose.causesWither && entityIn is EntityLivingBase) {
             entityIn.addPotionEffect(PotionEffect(MobEffects.WITHER, 120))
             entityIn.attackEntityFrom(DamageSource.WITHER, 1.0f)
         }

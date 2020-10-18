@@ -31,10 +31,10 @@ object EventBonemeal {
         val up = event.pos.up()
 
         if (world.isAirBlock(up) && block.block in FLOWER_ALLOWED_SOILS) {
-            if (ModConfig.Flowers.cornflowerEnabled) {
+            if (ModConfig.Cornflower.enabled) {
                 growFlowers(up, world, ModBlocks.CORNFLOWER)
             }
-            if (ModConfig.Flowers.lilyOfTheValleyEnabled) {
+            if (ModConfig.LilyOfTheValley.enabled) {
                 growFlowers(up, world, ModBlocks.LILY_OF_THE_VALLEY)
             }
             event.result = Event.Result.DEFAULT
@@ -43,7 +43,7 @@ object EventBonemeal {
 
     @SubscribeEvent
     @JvmStatic fun onBonemealUsedOnSoulsand(event: BonemealEvent) {
-        if (!ModConfig.Flowers.witherRoseEnabled) return;
+        if (!ModConfig.WitherRose.enabled) return;
 
         val world = event.world
         val block = event.block
@@ -62,7 +62,7 @@ object EventBonemeal {
 
     @SubscribeEvent
     @JvmStatic fun onBonemealUsedUnderwater(event: BonemealEvent) {
-        if (!ModConfig.Seaweed.seagrassEnabled) return
+        if (!ModConfig.Seagrass.enabled) return
 
         val world = event.world
         val block = event.block

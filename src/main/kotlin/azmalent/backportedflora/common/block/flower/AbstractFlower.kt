@@ -1,7 +1,7 @@
 package azmalent.backportedflora.common.block.flower
 
 import azmalent.backportedflora.BackportedFlora
-import net.minecraft.block.Block
+import azmalent.backportedflora.ModConfig
 import net.minecraft.block.BlockBush
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -14,7 +14,7 @@ import net.minecraft.world.biome.Biome
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 
-abstract class AbstractFlower(name: String) : BlockBush(Material.PLANTS) {
+abstract class AbstractFlower(name: String, val config: ModConfig.FloraConfig) : BlockBush(Material.PLANTS) {
     private lateinit var itemBlock: Item
 
     init {

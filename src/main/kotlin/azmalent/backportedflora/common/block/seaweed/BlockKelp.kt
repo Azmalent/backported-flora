@@ -41,7 +41,7 @@ class BlockKelp : AbstractSeaweed(NAME) {
                 .withProperty(AGE, 0)
                 .withProperty(BlockLiquid.LEVEL, 15)
 
-        tickRandomly = ModConfig.Seaweed.kelpGrowthEnabled
+        tickRandomly = ModConfig.Kelp.growthEnabled
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {

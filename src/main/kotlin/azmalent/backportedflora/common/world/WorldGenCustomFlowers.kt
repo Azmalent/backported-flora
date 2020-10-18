@@ -18,18 +18,9 @@ import net.minecraftforge.fml.common.IWorldGenerator
 import java.util.*
 
 abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorldGenerator {
-    companion object {
-        const val GENERATION_CHANCE = 1 / 8f
-        const val GENERATION_ATTEMPTS = 64
-    }
-
     private val defaultState = flower.defaultState
 
     abstract fun getGenerationPos(world: World, rand: Random, chunkPos: ChunkPos): BlockPos
-
-    abstract val generationChance: Double
-    abstract val patchGenerationAttempts: Int
-    abstract val flowerGenerationAttempts: Int
 
     abstract fun canGenerateInWorld(world: World): Boolean
 
@@ -38,8 +29,8 @@ abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorl
         if (flower.isBiomeValid(biome) && canGenerateInWorld(world)) {
             val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
-            if (rand.nextDouble() < generationChance) {
-                for (i in 0..patchGenerationAttempts) {
+            if (rand.nextFloat() < flower.config.generationChance) {
+                for (i in 0 until flower.config.patchAttempts) {
                     val pos = getGenerationPos(world, rand, chunkPos)
                     generateFlowers(world, rand, pos);
                 }
@@ -49,7 +40,7 @@ abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorl
     }
 
     private fun generateFlowers(world: World, rand: Random, pos: BlockPos) {
-        for (i in 0 until flowerGenerationAttempts) {
+        for (i in 0 until flower.config.plantAttempts) {
             val blockPos = pos.add(
                 rand.nextInt(8) - rand.nextInt(8),
                 rand.nextInt(4) - rand.nextInt(4),

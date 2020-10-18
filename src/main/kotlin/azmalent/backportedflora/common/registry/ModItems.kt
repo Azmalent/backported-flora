@@ -23,9 +23,9 @@ object ModItems {
     fun register(registry: IForgeRegistry<Item>) {
         registry.register(ItemModIcon())
 
-        if (ModConfig.Seaweed.kelpEnabled) {
-            if (ModConfig.Seaweed.kelpSoupEnabled) registry.register(ItemKelpSoup())
-            if (ModConfig.Seaweed.driedKelpEnabled) registry.register(ItemDriedKelp())
+        if (ModConfig.Kelp.enabled) {
+            if (ModConfig.Kelp.kelpSoupEnabled) registry.register(ItemKelpSoup())
+            if (ModConfig.Kelp.driedKelpEnabled) registry.register(ItemDriedKelp())
         }
     }
 
@@ -33,9 +33,9 @@ object ModItems {
     fun registerModels() {
         MOD_ICON.registerItemModel()
 
-        if (ModConfig.Seaweed.kelpEnabled) {
-            if (ModConfig.Seaweed.kelpSoupEnabled) KELP_SOUP.registerItemModel()
-            if (ModConfig.Seaweed.driedKelpEnabled) DRIED_KELP.registerItemModel()
+        if (ModConfig.Kelp.enabled) {
+            if (ModConfig.Kelp.kelpSoupEnabled) KELP_SOUP.registerItemModel()
+            if (ModConfig.Kelp.driedKelpEnabled) DRIED_KELP.registerItemModel()
         }
     }
 }

@@ -1,5 +1,6 @@
 package azmalent.backportedflora.common.world
 
+import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.seaweed.BlockKelp
 import azmalent.backportedflora.common.block.seaweed.BlockKelp.Companion.AGE
 import azmalent.backportedflora.common.registry.ModBlocks
@@ -15,18 +16,13 @@ import java.util.*
 
 
 class WorldGenKelp : IWorldGenerator {
-    companion object {
-        const val GENERATION_CHANCE = 0.5f
-        const val GENERATION_ATTEMPTS = 64
-    }
-
     override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
         val biome = WorldGenUtil.getBiomeInChunk(world, chunkX, chunkZ)
         if (ModBlocks.KELP.isBiomeValid(biome) && world.worldType != WorldType.FLAT) {
-            val chunkPos = world.getChunk(chunkX, chunkZ).pos
+            if (rand.nextFloat() < ModConfig.Kelp.generationChance) {
+                val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
-            if (rand.nextDouble() < GENERATION_CHANCE) {
-                for (i in 0..4) {
+                for (i in 0 until ModConfig.Kelp.patchAttempts) {
                     val x = rand.nextInt(16) + 8
                     val z = rand.nextInt(16) + 8
 
@@ -41,7 +37,7 @@ class WorldGenKelp : IWorldGenerator {
     }
 
     private fun generateKelp(world: World, rand: Random, targetPos: BlockPos) {
-        for (i in 0 until GENERATION_ATTEMPTS) {
+        for (i in 0 until ModConfig.Kelp.plantAttempts) {
             val pos = targetPos.add(
                 rand.nextInt(8) - rand.nextInt(8),
                 rand.nextInt(4) - rand.nextInt(4),

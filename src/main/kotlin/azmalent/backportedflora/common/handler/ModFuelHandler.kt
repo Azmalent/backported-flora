@@ -9,7 +9,7 @@ class ModFuelHandler : IFuelHandler {
     override fun getBurnTime(fuel: ItemStack?): Int {
         val item = fuel?.item ?: return 0
 
-        if (ModConfig.Seaweed.kelpEnabled && ModConfig.Seaweed.driedKelpEnabled) {
+        if (ModConfig.Kelp.enabled && ModConfig.Kelp.enabled) {
             if (item == ModBlocks.DRIED_KELP_BLOCK.itemBlock) return 4000
         }
 

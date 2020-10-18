@@ -18,11 +18,11 @@ object ModWorldgen {
     }
 
     fun register() {
-        if (ModConfig.Seaweed.seagrassEnabled) GameRegistry.registerWorldGenerator(WorldGenSeagrass(), 0)
-        if (ModConfig.Seaweed.kelpEnabled) GameRegistry.registerWorldGenerator(WorldGenKelp(), 0)
+        if (ModConfig.Seagrass.enabled) GameRegistry.registerWorldGenerator(WorldGenSeagrass(), 0)
+        if (ModConfig.Kelp.enabled) GameRegistry.registerWorldGenerator(WorldGenKelp(), 0)
 
-        if (ModConfig.Flowers.cornflowerEnabled) registerOverworldFlowerGen(ModBlocks.CORNFLOWER)
-        if (ModConfig.Flowers.lilyOfTheValleyEnabled) registerOverworldFlowerGen(ModBlocks.LILY_OF_THE_VALLEY)
-        if (ModConfig.Flowers.witherRoseEnabled) registerNetherFlowerGen(ModBlocks.WITHER_ROSE)
+        if (ModConfig.Cornflower.enabled) registerOverworldFlowerGen(ModBlocks.CORNFLOWER)
+        if (ModConfig.LilyOfTheValley.enabled) registerOverworldFlowerGen(ModBlocks.LILY_OF_THE_VALLEY)
+        if (ModConfig.WitherRose.enabled) registerNetherFlowerGen(ModBlocks.WITHER_ROSE)
     }
 }

@@ -32,45 +32,45 @@ object ModBlocks {
     lateinit var DRIED_KELP_BLOCK: BlockDriedKelp
 
     fun register(registry: IForgeRegistry<Block>) {
-        if (ModConfig.Seaweed.seagrassEnabled) registry.register(BlockSeagrass())
-        if (ModConfig.Seaweed.kelpEnabled) {
+        if (ModConfig.Seagrass.enabled) registry.register(BlockSeagrass())
+        if (ModConfig.Kelp.enabled) {
             registry.register(BlockKelp())
-            if (ModConfig.Seaweed.driedKelpEnabled) {
+            if (ModConfig.Kelp.driedKelpEnabled) {
                 registry.register(BlockDriedKelp())
             }
         }
 
-        if (ModConfig.Flowers.cornflowerEnabled) registry.register(BlockCornflower())
-        if (ModConfig.Flowers.lilyOfTheValleyEnabled) registry.register(BlockLilyOfTheValley())
-        if (ModConfig.Flowers.witherRoseEnabled) registry.register(BlockWitherRose())
+        if (ModConfig.Cornflower.enabled) registry.register(BlockCornflower())
+        if (ModConfig.LilyOfTheValley.enabled) registry.register(BlockLilyOfTheValley())
+        if (ModConfig.WitherRose.enabled) registry.register(BlockWitherRose())
     }
 
     fun registerItemBlocks(registry: IForgeRegistry<Item>) {
-        if (ModConfig.Seaweed.seagrassEnabled) registry.register(SEAGRASS.createItemBlock())
-        if (ModConfig.Seaweed.kelpEnabled) {
+        if (ModConfig.Seagrass.enabled) registry.register(SEAGRASS.createItemBlock())
+        if (ModConfig.Kelp.enabled) {
             registry.register(KELP.createItemBlock())
-            if (ModConfig.Seaweed.driedKelpEnabled) {
+            if (ModConfig.Kelp.driedKelpEnabled) {
                 registry.register(DRIED_KELP_BLOCK.createItemBlock())
             }
         }
 
-        if (ModConfig.Flowers.cornflowerEnabled) registry.register(CORNFLOWER.createItemBlock())
-        if (ModConfig.Flowers.lilyOfTheValleyEnabled) registry.register(LILY_OF_THE_VALLEY.createItemBlock())
-        if (ModConfig.Flowers.witherRoseEnabled) registry.register(WITHER_ROSE.createItemBlock())
+        if (ModConfig.Cornflower.enabled) registry.register(CORNFLOWER.createItemBlock())
+        if (ModConfig.LilyOfTheValley.enabled) registry.register(LILY_OF_THE_VALLEY.createItemBlock())
+        if (ModConfig.WitherRose.enabled) registry.register(WITHER_ROSE.createItemBlock())
     }
 
     @SideOnly(Side.CLIENT)
     fun registerModels() {
-        if (ModConfig.Seaweed.seagrassEnabled) SEAGRASS.registerItemModel()
-        if (ModConfig.Seaweed.kelpEnabled) {
+        if (ModConfig.Seagrass.enabled) SEAGRASS.registerItemModel()
+        if (ModConfig.Kelp.enabled) {
             KELP.registerItemModel()
-            if (ModConfig.Seaweed.driedKelpEnabled) {
+            if (ModConfig.Kelp.driedKelpEnabled) {
                 DRIED_KELP_BLOCK.registerItemModel()
             }
         }
 
-        if (ModConfig.Flowers.cornflowerEnabled) CORNFLOWER.registerItemModel()
-        if (ModConfig.Flowers.lilyOfTheValleyEnabled) LILY_OF_THE_VALLEY.registerItemModel()
-        if (ModConfig.Flowers.witherRoseEnabled) WITHER_ROSE.registerItemModel()
+        if (ModConfig.Cornflower.enabled) CORNFLOWER.registerItemModel()
+        if (ModConfig.LilyOfTheValley.enabled) LILY_OF_THE_VALLEY.registerItemModel()
+        if (ModConfig.WitherRose.enabled) WITHER_ROSE.registerItemModel()
     }
 }

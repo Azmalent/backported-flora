@@ -3,54 +3,70 @@ package azmalent.backportedflora
 import net.minecraftforge.common.config.Configuration
 
 object ModConfig {
-    object Seaweed {
-        private const val NAME = "Seaweed"
-        var seagrassEnabled = true
-        var kelpEnabled = true
-        var kelpGrowthEnabled = true
-        var driedKelpEnabled = true
-        var kelpSoupEnabled = true
+    abstract class FloraConfig(var enabled: Boolean, var generationChance: Float, var patchAttempts: Int, var plantAttempts: Int) {
+        abstract val name: String
 
-        fun init(cfg: Configuration) {
-            cfg.addCustomCategoryComment(NAME, "Features related to kelp.")
+        open fun init(config: Configuration) {
+            val lowerCaseName = name.toLowerCase()
 
-            seagrassEnabled = cfg.getBoolean("Seagrass", NAME, seagrassEnabled,
-                    "Whether seagrass is registered")
-            kelpEnabled = cfg.getBoolean("Kelp", NAME, kelpEnabled,
-                    "Whether kelp is registered")
-            kelpGrowthEnabled = cfg.getBoolean("Kelp grows", NAME, kelpGrowthEnabled,
-                    "Should kelp grow on its own?")
-            driedKelpEnabled = cfg.getBoolean("Dried kelp", NAME, driedKelpEnabled,
-                    "Whether dried kelp is enabled.\n" +
-                            "Dried kelp is a food item that can be eaten quickly.\n" +
-                            "You can also craft it into blocks that can be used as fuel.")
-            kelpSoupEnabled = cfg.getBoolean("Kelp soup", NAME, kelpSoupEnabled,
-                    "Whether kelp can be cooked into delicious soup")
-
+            config.addCustomCategoryComment(name, "Features related to $lowerCaseName.")
+            enabled = config.getBoolean("Enabled", name, enabled, "Whether $lowerCaseName is registered.")
+            generationChance = config.getFloat("Generation Chance", name,
+                    generationChance, 0.0f, 1.0f,
+                    "The chance to attempt generating $lowerCaseName in a given chunk.")
+            patchAttempts = config.getInt("Patch Generation Attempts", name,
+                    patchAttempts, 0, 16,
+                    "Attempts to generate a $lowerCaseName patch in a given chunk.")
+            plantAttempts = config.getInt("Plant Generation Attempts", name,
+                    plantAttempts, 0, 64,
+                    "Attempts to generate a $lowerCaseName in every patch.")
         }
     }
 
-    object Flowers {
-        private const val NAME = "Flowers"
-        var cornflowerEnabled = true
-        var lilyOfTheValleyEnabled = true
-        var witherRoseEnabled = true
-        var witherRoseCausesWither = true
+    object Kelp : FloraConfig(true, 0.5f, 4, 64) {
+        override val name  = "Kelp"
 
-        fun init(cfg: Configuration) {
-            cfg.addCustomCategoryComment(NAME, "Features related to flowers added by this mod.")
+        var growthEnabled = true
+        var driedKelpEnabled = true
+        var kelpSoupEnabled = true
 
-            cornflowerEnabled = cfg.getBoolean("Cornflower", NAME, cornflowerEnabled,
-                    "Whether cornflowers are enabled.")
+        override fun init(config: Configuration) {
+            super.init(config)
 
-            lilyOfTheValleyEnabled = cfg.getBoolean("Lily of the valley", NAME, lilyOfTheValleyEnabled,
-                    "Whether lilies of the valley are enabled.")
+            growthEnabled = config.getBoolean("Growth Enabled", name, growthEnabled,
+                    "Should kelp grow on its own?")
+            driedKelpEnabled = config.getBoolean("Dried Kelp", name, driedKelpEnabled,
+                    "Whether dried kelp is enabled.\n" +
+                            "Dried kelp is a food item that can be eaten quickly.\n" +
+                            "You can also craft it into blocks that can be used as fuel.")
+            kelpSoupEnabled = config.getBoolean("Kelp Soup", name, kelpSoupEnabled,
+                    "Whether kelp can be cooked into delicious soup")
+        }
 
-            witherRoseEnabled = cfg.getBoolean("Wither rose", NAME, witherRoseEnabled,
-                    "Whether wither roses are enabled.\n" +
-                            "Unlike wither roses in vanilla 1.14, they will spawn on soul sand in the Nether.")
-            witherRoseCausesWither = cfg.getBoolean("Wither roses cause wither", NAME, witherRoseCausesWither,
-                    "Should wither roses apply wither?")
+    }
+
+    object Seagrass : FloraConfig(true, 1.0f, 4, 64) {
+        override val name = "Seagrass"
+    }
+
+    object Cornflower : FloraConfig(true, 1/8f, 4, 64) {
+        override val name = "Cornflower"
+    }
+
+    object LilyOfTheValley : FloraConfig(true, 1/8f, 4, 64) {
+        override val name = "Lily of the Valley"
+    }
+
+    object WitherRose : FloraConfig(true, 0.5f, 8, 64) {
+        override val name = "Wither Rose"
+
+        var causesWither = true
+
+        override fun init(config: Configuration) {
+            super.init(config)
+
+            causesWither = config.getBoolean("Wither roses cause wither", name, causesWither,
+                    "Should wither roses apply wither to touching entities?")
         }
     }
 
@@ -59,8 +75,11 @@ object ModConfig {
 
         try {
             config.load()
-            Seaweed.init(config)
-            Flowers.init(config)
+            Kelp.init(config)
+            Seagrass.init(config)
+            Cornflower.init(config)
+            LilyOfTheValley.init(config)
+            WitherRose.init(config)
         } catch(e: Exception) {
             BackportedFlora.logger.error("Error: failed to load config!")
         } finally {

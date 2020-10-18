@@ -22,7 +22,7 @@ object ModSoundEvents {
     val SEAWEED_FALL  = createSoundEvent("block.seaweed.fall")
 
     fun register(registry: IForgeRegistry<SoundEvent>) {
-        if (ModConfig.Seaweed.seagrassEnabled || ModConfig.Seaweed.kelpEnabled) {
+        if (ModConfig.Seagrass.enabled || ModConfig.Kelp.enabled) {
             registry.registerAll(
                 SEAWEED_BREAK,
                 SEAWEED_STEP,
