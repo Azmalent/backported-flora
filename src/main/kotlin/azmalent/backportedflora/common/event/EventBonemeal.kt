@@ -19,7 +19,7 @@ object EventBonemeal {
     private const val SEAGRASS_GENERATION_ATTEMPTS = 8
 
     private val FLOWER_ALLOWED_SOILS = setOf(
-            Blocks.GRASS, Blocks.DIRT, Blocks.FARMLAND
+        Blocks.GRASS, Blocks.DIRT, Blocks.FARMLAND
     )
 
     @SubscribeEvent

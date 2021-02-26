@@ -13,14 +13,12 @@ import net.minecraft.item.Item
 import net.minecraft.util.SoundEvent
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.event.RegistryEvent
-import net.minecraftforge.event.entity.player.BonemealEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.common.registry.GameRegistry
 import org.apache.logging.log4j.Logger
 import java.io.File
@@ -31,7 +29,7 @@ import java.io.File
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Backported Flora"
-    const val VERSION = "1.6.0"
+    const val VERSION = "1.7"
     const val CONFIG_FILE_NAME = "$MODID.cfg"
 
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
@@ -47,11 +45,11 @@ object BackportedFlora {
     lateinit var proxy: IProxy
 
     lateinit var config: Configuration
-    lateinit var logger: Logger
+    lateinit var LOGGER: Logger
 
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
-        logger = event.modLog
+        LOGGER = event.modLog
 
         val configDir = event.modConfigurationDirectory
         config = Configuration(File(configDir, CONFIG_FILE_NAME))
@@ -61,34 +59,36 @@ object BackportedFlora {
     }
 
     @Mod.EventHandler
+    @Suppress("DEPRECATION")
     fun init(event: FMLInitializationEvent) {
+        proxy.init(event)
         GameRegistry.registerFuelHandler(ModFuelHandler())
         ModWorldgen.register()
         ModRecipes.register()
-        proxy.init(event)
     }
 
     @Mod.EventHandler
     fun postInit(event: FMLPostInitializationEvent) {
         proxy.postInit(event)
+        ModItems.initOreDictionary()
     }
 
     @SubscribeEvent
     @JvmStatic fun onRegisterBlocks(event: RegistryEvent.Register<Block>) {
-        logger.info("Registering blocks")
+        LOGGER.info("Registering blocks")
         ModBlocks.register(event.registry)
     }
 
     @SubscribeEvent
     @JvmStatic fun onRegisterItems(event: RegistryEvent.Register<Item>) {
-        logger.info("Registering items")
+        LOGGER.info("Registering items")
         ModBlocks.registerItemBlocks(event.registry)
         ModItems.register(event.registry)
     }
 
     @SubscribeEvent
     @JvmStatic fun onRegisterSoundEvents(event: RegistryEvent.Register<SoundEvent>) {
-        logger.info("Registering sounds")
+        LOGGER.info("Registering sounds")
         ModSoundEvents.register(event.registry)
     }
 }

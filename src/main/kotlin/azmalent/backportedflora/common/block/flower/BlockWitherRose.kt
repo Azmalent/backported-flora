@@ -21,7 +21,8 @@ class BlockWitherRose : AbstractFlower(NAME, ModConfig.WitherRose) {
     }
 
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
-        return worldIn.getBlockState(pos.down()).block == Blocks.SOUL_SAND
+        val soil = worldIn.getBlockState(pos.down()).block
+        return soil == Blocks.SOUL_SAND || soil == Blocks.NETHERRACK
     }
 
     override fun isBiomeValid(biome: Biome): Boolean {

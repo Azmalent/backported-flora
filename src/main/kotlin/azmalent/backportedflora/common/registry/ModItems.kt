@@ -8,6 +8,7 @@ import net.minecraft.item.Item
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.registries.IForgeRegistry
 
 object ModItems {
@@ -37,5 +38,12 @@ object ModItems {
             if (ModConfig.Kelp.kelpSoupEnabled) KELP_SOUP.registerItemModel()
             if (ModConfig.Kelp.driedKelpEnabled) DRIED_KELP.registerItemModel()
         }
+    }
+
+    fun initOreDictionary() {
+        if (ModConfig.Cornflower.enabled) OreDictionary.registerOre("allFlowers", ModBlocks.CORNFLOWER)
+        if (ModConfig.LilyOfTheValley.enabled) OreDictionary.registerOre("allFlowers", ModBlocks.LILY_OF_THE_VALLEY)
+        if (ModConfig.WitherRose.enabled) OreDictionary.registerOre("allFlowers", ModBlocks.WITHER_ROSE)
+        if (ModConfig.Kelp.enabled) OreDictionary.registerOre("cropSeaweed", ModBlocks.KELP)
     }
 }

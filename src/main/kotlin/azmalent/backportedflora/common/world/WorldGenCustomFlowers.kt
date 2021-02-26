@@ -1,5 +1,6 @@
 package azmalent.backportedflora.common.world
 
+import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
 import azmalent.backportedflora.common.block.seaweed.BlockKelp
 import azmalent.backportedflora.common.registry.ModBlocks
@@ -17,7 +18,7 @@ import net.minecraft.world.gen.feature.WorldGenFlowers
 import net.minecraftforge.fml.common.IWorldGenerator
 import java.util.*
 
-abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorldGenerator {
+abstract class WorldGenCustomFlowers(protected val flower: AbstractFlower) : IWorldGenerator {
     private val defaultState = flower.defaultState
 
     abstract fun getGenerationPos(world: World, rand: Random, chunkPos: ChunkPos): BlockPos
@@ -40,18 +41,24 @@ abstract class WorldGenCustomFlowers(private val flower: AbstractFlower) : IWorl
     }
 
     private fun generateFlowers(world: World, rand: Random, pos: BlockPos) {
-        for (i in 0 until flower.config.plantAttempts) {
+        if (flower.config is ModConfig.OverworldFloraConfig && !flower.config.canGenerate(world, pos)) {
+            return
+        }
+
+         for (i in 0 until flower.config.plantAttempts) {
             val blockPos = pos.add(
                 rand.nextInt(8) - rand.nextInt(8),
                 rand.nextInt(4) - rand.nextInt(4),
                 rand.nextInt(8) - rand.nextInt(8)
             )
 
-            if (world.isAirBlock(blockPos)
-                    && blockPos.y < 255
-                    && flower.canBlockStay(world, blockPos, defaultState)) {
+            if (world.isAirBlock(blockPos) && blockPos.y < 255 && canGenerateOnBlock(world, blockPos)) {
                 world.setBlockState(blockPos, defaultState, 2)
             }
         }
+    }
+
+    protected open fun canGenerateOnBlock(world: World, pos: BlockPos): Boolean {
+        return flower.canBlockStay(world, pos, defaultState)
     }
 }

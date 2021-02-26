@@ -33,6 +33,10 @@ class WorldGenSeagrass : IWorldGenerator {
     }
 
     private fun generateSeagrass(world: World, rand: Random, targetPos: BlockPos) {
+        if (!ModConfig.Seagrass.canGenerate(world, targetPos) || (!ModConfig.Seagrass.generatesUnderground && !WorldGenUtil.canSeeSky(world, targetPos))) {
+            return
+        }
+
         for (i in 0..ModConfig.Seagrass.plantAttempts) {
             val pos = targetPos.add(
                     rand.nextInt(8) - rand.nextInt(8),

@@ -37,6 +37,10 @@ class WorldGenKelp : IWorldGenerator {
     }
 
     private fun generateKelp(world: World, rand: Random, targetPos: BlockPos) {
+        if (!ModConfig.Kelp.canGenerate(world, targetPos) || (!ModConfig.Kelp.generatesUnderground && !WorldGenUtil.canSeeSky(world, targetPos))) {
+            return
+        }
+
         for (i in 0 until ModConfig.Kelp.plantAttempts) {
             val pos = targetPos.add(
                 rand.nextInt(8) - rand.nextInt(8),
